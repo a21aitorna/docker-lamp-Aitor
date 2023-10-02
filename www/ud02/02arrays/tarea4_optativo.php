@@ -1,9 +1,10 @@
 <table>
-    <tr>
+    <thead>
         <th>Ciudad</th>
-        <th>País</th>
+        <th>Pais</th>
         <th>Continente</th>
-    </tr>
+    </thead>
+    <tbody>
 <?php
 /*
 En un *string*, tenemos almacenados varios datos agrupados en ciudad, país y continente.
@@ -16,5 +17,16 @@ Con la información anterior, realiza las seguintes tareas:
 1. Crea la estrutura de datos y almacena toda la información anterior.
 2. Utilizando a instrución `foreach` y listas HTML,  imprime toda la información almacenada en formato de tabla.
 */
+    $informacion = "Tokyo,Japan,Asia;Mexico City,Mexico,North America;New York City,USA,North America;Mumbai,India,Asia;Seoul,Korea,Asia;Shanghai,China,Asia;Lagos,Nigeria,Africa;Buenos Aires,Argentina,South America;Cairo,Egypt,Africa;London,UK,Europe";
+    $informacion_pais = explode(';', $informacion);
+    foreach($informacion_pais as $pais){
+        $caracteristicas_pais = explode(',', $pais);
+        echo "<tr>";
+        foreach($caracteristicas_pais as $caracteristica){
+            echo "<td>".$caracteristica."</td>";
+        }
+        echo "</tr>";
+    }
 ?>
+    </tbody>
 </table>
