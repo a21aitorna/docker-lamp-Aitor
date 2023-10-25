@@ -85,9 +85,15 @@
 localización por defecto. Debes comprobar como axustar as coordenadas (latitude e lonxitude)
  predeterminadas do teu servidor.
 */
-    function salePoneSol($longitud, $latitud){
-     echo "El sol sale a las ". date_sunrise(time(), SUNFUNCS_RET_STRING, $longitud, $latitud,90,1)." y se pone a las ".date_sunset(time(), SUNFUNCS_RET_STRING, $longitud, $latitud,90,1);
+    function salePoneSol(){
+        $fecha = time();
+        $latitud = ini_get("date.default_latitude");
+        $longitud = ini_get("date.default_longitude");
+        $zenith = ini_get("date.default_zenith");
+        $gmt_offset = 1;
+    echo "El sol sale a las ". date_sunrise($fecha, SUNFUNCS_RET_STRING, $longitud, $latitud, $zenith, $gmt_offset)." y se pone a las ".date_sunset($fecha, SUNFUNCS_RET_STRING, $longitud, $latitud,$zenith, $gmt_offset);
       
     }
-    salePoneSol(42.1597971, -8.5268622);
+    salePoneSol();
+    //No sale nada ya que los metodos date_sunrise y date_sunset están obsoletos
 ?>
