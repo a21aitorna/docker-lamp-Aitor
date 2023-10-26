@@ -77,7 +77,7 @@
                 $minutos = floor($segundos / 60);
                 $segundos %= 60;
 
-                echo("los segundos introducidos equivalen a $semanas semanas, $dias dias, $horas horas, $dias dias, $horas horas, $minutos minutos y $segundos segundos");
+                echo("Los segundos introducidos equivalen a $semanas semanas, $dias dias, $horas horas, $dias dias, $horas horas, $minutos minutos y $segundos segundos");
             }
         ?>
     </body>
@@ -93,25 +93,24 @@ echo("<br><br><br>");
     Donde N indica el número de día del mes de marzo (si N es igual o menor que 31) o abril (si es mayor que 31). Contruir un programa que determina las fechas de domingos 
     de pascua dado el año. Nota: Emplea únicamente las variables anho, d y n.
     */
-    /*$A = $anho%9;
+    /*$A = $anho%19;
     $B = $anho%4;
     $C = $anho%7;
-    $D = 19*$A+24;
+    $D = (19*$A+24)%30;
     $E = (2*$B+4*$C+6*$D+5)%7;
     $N = 22+$D+$E;
     */
 
     function calcularDomingoPascua($anho){
-        $D = 19*($anho%9)+24;
+        $D = (19*($anho%19)+24)%30;
         $N = 22+ $D+((2*($anho%4)+4*($anho%7)+6*$D+5)%7);
-        echo($N);
         if($N<=31){
-            echo "El domingo de Pascua del año $anho es el ".($N+1)." de marzo";
+            echo "El domingo de Pascua del año $anho es el ".($N)." de marzo";
         }
         else{
-            echo "El domingo de Pascua del año $anho es el ".($N+31+1)." de abril";
+            echo "El domingo de Pascua del año $anho es el ".($N-31)." de abril";
         }
     }
-    calcularDomingoPascua(2023);
+    calcularDomingoPascua(2024);
    
 ?>
