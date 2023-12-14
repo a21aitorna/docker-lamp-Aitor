@@ -8,6 +8,8 @@
         else
             $respuesta="El caracter no es un numero";    
         return $respuesta."<br>";
+        // $respuesta = (is_integer($a) && $a>=0 && $a<=9) ? "El numero esta entre 0 y 9": "El numero no esta entre 0 y 9 o el caracter no es un numero";
+        // return $respuesta;
     }
     echo(esDigito(6));
 
