@@ -22,7 +22,8 @@ include "lib/utilidades.php";
     </script>
 
 <?php
-
+//ANA: falta por crear la variable $conexion, que es la función de get_conexion() en la base de datos. Sin ella, no hay conexión a la base de datos y no se puede hacer nada, a parte de haber side llamada como parámetro en el resto de código.
+$conexion = get_conexion();
 $seleccion_bd = seleccionar_bd_tienda($conexion);
 
 $id = $_GET["id"];

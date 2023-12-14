@@ -7,11 +7,16 @@ function get_conexion()
     if ($conexion->connect_errno != null) {
         die("Fallo en la conexión: " . $conexion->connect_error . "Con numero" . $conexion->connect_errno);
     }
+
+    //ANA Hubo que añadir el return de la variable $conexion.
+    return $conexion;
 }
 
 function seleccionar_bd_tienda($conexion)
 {
-    return $conexion->select_db("tinda");
+    //Hay que poner el nombre de la base de datos bien que ponía tinda en vez de tienda.
+    return $conexion->select_db("tienda");
+
 }
 
 function ejecutar_consulta($conexion, $sql)

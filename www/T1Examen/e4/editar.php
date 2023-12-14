@@ -24,8 +24,8 @@ if (isset($_POST["submit"])) {
 } else {
     if (isset($_GET["id"])) {
         $id_user = $_GET["id"];
-        
-        $user = get_usuario($conexion);
+        //ANA: le falta por añadir el parámetro $id_user, que se especefíca en la base_datos.php que es necesario, ya que en la cinsulta se busca por id.
+        $user = get_usuario($conexion, $id_user);
 
         if ($user->num_rows > 0) {
             $row = $user->fetch_assoc();
