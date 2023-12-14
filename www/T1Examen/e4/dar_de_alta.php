@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         $conexion = get_conexion();
         seleccionar_bd_tienda($conexion);
         dar_alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia);
+        //ANA: faltaba la variable de $conexion, ya que se indica en lad bade_datos.php que tiene que pasarse como parametro, a parte de que sin conexion no se puede hacer nada.
         $mensajes = "Usuario dado de alta correctamente";
         cerrar_conexion($conexion);
     }

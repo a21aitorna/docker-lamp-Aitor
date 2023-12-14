@@ -8,13 +8,13 @@ function get_conexion()
         die("Fallo en la conexión: " . $conexion->connect_error . "Con numero" . $conexion->connect_errno);
     }
 
-    //ANA Hubo que añadir el return de la variable $conexion.
+    //ANA: Hubo que añadir el return de la variable $conexion.
     return $conexion;
 }
 
 function seleccionar_bd_tienda($conexion)
 {
-    //Hay que poner el nombre de la base de datos bien que ponía tinda en vez de tienda.
+    //ANA: Hay que poner el nombre de la base de datos bien que ponía tinda en vez de tienda.
     return $conexion->select_db("tienda");
 
 }
