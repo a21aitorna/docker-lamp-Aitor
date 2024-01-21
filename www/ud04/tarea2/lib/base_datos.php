@@ -106,25 +106,23 @@ function borrar_usuario($conexion, $id)
 
 function dar_alta_producto($conexion, $nombre, $descripcion, $precio, $unidades, $foto)
 {
-    // Verificar que $foto es un array y contiene información
     if (!is_array($foto) || empty($foto["name"]) || empty($foto["size"]) || empty($foto["tmp_name"])) {
         die("Error: La información de la imagen no es válida.");
     }
 
-    // Subir la imagen y obtener la ruta
     $ruta_destino = subir_imagen($foto);
 
-    // Preparar y ejecutar la consulta SQL
     $sql = $conexion->prepare("INSERT INTO productos (nombre, descripcion, precio, unidades, foto) VALUES (?, ?, ?, ?, ?)");
     $sql->bind_param("ssdds", $nombre, $descripcion, $precio, $unidades, $ruta_destino);
 
-    // Verificar si la ejecución fue exitosa
     if ($sql->execute()) {
         return true;
     } else {
         die("Error al dar de alta el producto: " . $conexion->error);
     }
 }
+
+
 
 function subir_imagen($foto)
 {
@@ -145,6 +143,74 @@ function subir_imagen($foto)
     }
 }
 
+function crear_tabla_imagenes_producto($conexion){
+    $sql ="CREATE TABLE IF NOT EXISTS imagenes_producto (
+        id_producto INT(6),
+        imagen_producto BLOB,
+        PRIMARY KEY (id_producto),
+        FOREIGN KEY (id_producto) REFERENCES productos(id)
+    )";
+    ejecutar_consulta($conexion, $sql);
+    
+}
+function dar_alta_productos($conexion, $nombre, $descripcion, $precio, $unidades, $fotos)
+{
+    $sql = $conexion->prepare("INSERT INTO productos (nombre, descripcion, precio, unidades) VALUES (?, ?, ?, ?)");
+    $sql->bind_param("ssdd", $nombre, $descripcion, $precio, $unidades);
+
+    if (!$sql->execute()) {
+        die("Error al dar de alta el producto: " . $conexion->error);
+    }
+
+    $id_producto = $sql->insert_id;
+
+    foreach ($fotos["tmp_name"] as $key => $archivoTemporal) {
+        $nombreArchivo = $fotos["name"][$key];
+        $tamanhoArchivo = $fotos["size"][$key];
+        $imagenTemp = $fotos["tmp_name"][$key];
+
+        if (compruebaExtension($nombreArchivo) && compruebaTamanho($tamanhoArchivo)) {
+            $ruta_destino = subir_imagen($imagenTemp);
+
+            insertar_imagen_producto($conexion, $id_producto, $ruta_destino);
+        } else {
+            die("Error: La imagen debe ser de formato PNG, JPG, JPEG o GIF y no debe superar los 50 MB.");
+        }
+    }
+
+    return true;
+}
+
+
+function insertar_imagen_producto($conexion, $id_producto, $ruta_imagen)
+{
+    $sql = $conexion->prepare("INSERT INTO imagenes_producto (id_producto, imagen_producto) VALUES (?, ?)");
+    $sql->bind_param("is", $id_producto, $ruta_imagen);
+
+    if (!$sql->execute()) {
+        die("Error al insertar la imagen del producto: " . $conexion->error);
+    }
+}
+
+function subir_imagenes($fotos)
+{
+    $ruta_destino = "uploads/";
+    $rutas_imagenes = [];
+
+    foreach ($fotos["tmp_name"] as $key => $archivoTemporal) {
+        $nombreArchivo = $fotos["name"][$key];
+        $nombreUnico = uniqid() . "_" . $nombreArchivo;
+        $ruta_destino_completa = $ruta_destino . $nombreUnico;
+
+        if (move_uploaded_file($archivoTemporal, $ruta_destino_completa)) {
+            $rutas_imagenes[] = $ruta_destino_completa;
+        } else {
+            die("Error al mover la imagen al servidor.");
+        }
+    }
+
+    return $rutas_imagenes;
+}
 
 function cerrar_conexion($conexion)
 {

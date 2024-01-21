@@ -1,5 +1,5 @@
 <?php
-
+// considere que en este ejercicio no se subia nada a base de datos, que solo fueran los directorios
 require "lib/base_datos.php";
 require "lib/utilidades.php";
 require "lib/funciones.php";
@@ -12,31 +12,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $precio = test_input($_POST["precio"]);
     $unidades = test_input($_POST["unidades"]);
 
-    if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == UPLOAD_ERR_OK) {
-        $foto = $_FILES["foto"];
+    if (isset($_FILES["archivo"]) && $_FILES["archivo"]["error"] == UPLOAD_ERR_OK) {
+        $archivo = $_FILES["archivo"];
 
-        $nombreArchivo = $foto["name"];
-        $tamanhoArchivo = $foto["size"];
+        $nombreArchivo = $archivo["name"];
+        $tamanhoArchivo = $archivo["size"];
 
-        if (compruebaExtension($nombreArchivo) && compruebaTamanho($tamanhoArchivo)) {
-            $conexion = get_conexion();
-            seleccionar_bd_tienda($conexion);
+        $fileExtension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
 
-            dar_alta_producto($conexion, $nombre, $descripcion, $precio, $unidades, $foto);
+        $conexion = get_conexion();
+        seleccionar_bd_tienda($conexion);
 
-            cerrar_conexion($conexion);
+        $uploadDirectory = determinarDirectorio($fileExtension);
 
-            $mensajes = "Producto dado de alta correctamente";
-        } else {
-            $mensajes = "Error: La imagen debe ser de formato PNG, JPG, JPEG o GIF y no debe superar los 50 MB.";
-        }
+        move_uploaded_file($archivo["tmp_name"], $uploadDirectory . $nombreArchivo);
+
+        $mensajes = "Producto dado de alta correctamente";
     } else {
-        $mensajes = "Error al cargar la imagen.";
+        $mensajes = "Error al cargar el archivo.";
+    }
+}
+
+function determinarDirectorio($fileExtension) {
+    switch ($fileExtension) {
+        case 'txt':
+            return "uploads/textos/";
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'gif':
+            return "uploads/imagenes/";
+        case 'pdf':
+            return "uploads/pdf/";
+        default:
+            return "uploads/otros/";
     }
 }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -72,8 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
                 <input type="text" class="form-control" name="unidades" required>
             </div>
             <div class="mb-3">
-                <label for="foto" class="form-label">Imagen del Producto:</label>
-                <input type="file" class="form-control" name="foto" accept="image/*" required>
+                <label for="archivo" class="form-label">Archivo:</label>
+                <input type="file" class="form-control" name="archivo" accept="     *" required>
             </div>
             <input type="submit" name="submit" value="Agregar Producto" class="btn btn-primary">
         </form>

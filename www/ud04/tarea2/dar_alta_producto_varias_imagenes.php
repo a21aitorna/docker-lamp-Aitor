@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             $conexion = get_conexion();
             seleccionar_bd_tienda($conexion);
 
-            dar_alta_producto($conexion, $nombre, $descripcion, $precio, $unidades, $foto);
+            dar_alta_productos($conexion, $nombre, $descripcion, $precio, $unidades, $foto);
 
             cerrar_conexion($conexion);
 
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             </div>
             <div class="mb-3">
                 <label for="foto" class="form-label">Imagen del Producto:</label>
-                <input type="file" class="form-control" name="foto" accept="image/*" required>
+                <input type="file" class="form-control" name="foto[]" accept="image/*" multiple required>
             </div>
             <input type="submit" name="submit" value="Agregar Producto" class="btn btn-primary">
         </form>
