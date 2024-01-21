@@ -172,7 +172,11 @@ function dar_alta_productos($conexion, $nombre, $descripcion, $precio, $unidades
         if (compruebaExtension($nombreArchivo) && compruebaTamanho($tamanhoArchivo)) {
             $ruta_destino = subir_imagen($imagenTemp);
 
-            insertar_imagen_producto($conexion, $id_producto, $ruta_destino);
+            if ($ruta_destino) {
+                insertar_imagen_producto($conexion, $id_producto, $ruta_destino);
+            } else {
+                die("Error al subir la imagen al servidor.");
+            }
         } else {
             die("Error: La imagen debe ser de formato PNG, JPG, JPEG o GIF y no debe superar los 50 MB.");
         }
@@ -180,6 +184,7 @@ function dar_alta_productos($conexion, $nombre, $descripcion, $precio, $unidades
 
     return true;
 }
+
 
 
 function insertar_imagen_producto($conexion, $id_producto, $ruta_imagen)
