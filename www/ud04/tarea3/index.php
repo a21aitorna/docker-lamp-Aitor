@@ -1,12 +1,14 @@
 <?php
 
-  require "lib/base_datos.php";
+require "lib/base_datos.php";
 
-  session_start();
-  if(isset($_SESSION['usuario'])){
-    header("Location: index.php");
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
     exit();
-  }
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -32,11 +34,20 @@
         crear_tabla_usuarios($conexion);
         cerrar_conexion($conexion);
     ?>
-    <p>
-        <a class="btn btn-primary" href="dar_de_alta.php" role="button"> Alta usuarios</a>
-        <a class="btn btn-primary" href="listar.php" role="button"> Listar usuarios</a>
-        <a class="btn btn-primary" href="inicio_sesion.php" role="button"> Login</a>
-    </p>
+
+    <?php
+
+        if (isset($_SESSION['user_nombre'])) {
+    ?>
+            <p>
+                Bienvenido, <?php echo $_SESSION['user_nombre']; ?>!
+                <a class="btn btn-primary" href="dar_de_alta.php" role="button"> Alta usuarios</a>
+                <a class="btn btn-primary" href="listar.php" role="button"> Listar usuarios</a>
+                <a class="btn btn-primary" href="logout.php" role="button"> Logout</a>
+            </p>
+    <?php
+        }
+    ?>
     <footer>
         <p>
             <a href='index.php'>Página de inicio</a>

@@ -56,15 +56,6 @@ function listar_usuarios($conexion)
     return $resultado;
 }
  
-function get_usuario($conexion, $id)
-{
-    $sql = "SELECT id, nombre, apellidos,edad, provincia
-            FROM usuarios
-            WHERE id=$id";
-
-    $resultado = ejecutar_consulta($conexion, $sql);
-    return $resultado;
-}
 
 function editar_usuario($conexion, $id, $nombre, $apellidos, $edad, $provincia)
 {
@@ -98,19 +89,23 @@ function cerrar_conexion($conexion)
     $conexion->close();
 }
 
-function get_usuario_nombre($conexion, $nombre)
+function get_usuario($conexion, $nombre, $contrasenha)
 {
-    $sql = "SELECT  nombre, contrasenha FROM usuarios WHERE nombre = ?";
-    // $sql->bind_param("s", $nombre);
-    // $resultado = $sql->get_result();
-    // return $resultado;
-    $resultado = $conexion->prepare($sql) or die($conexion->error);
-    if($resultado->num_rows){
-        while($fila = $resultado->fetch_assoc()){
-            $_SESSION['nombre'] = $fila['nombre'];
-            $_SESSION['contrasenha'] = $fila['contrasenha'];
-        }
-    }
+    $id=0;
+    $hash_contrasenha = "";
+    $sql = "SELECT id, nombre, contrasenha FROM usuarios WHERE nombre = ? LIMIT 1";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("s", $nombre);
+    $stmt->execute();
+    $stmt->bind_result($id, $nombre, $hash_contrasenha);
+    $stmt->fetch();
+    $stmt->close();
+
+    return [
+        'id' => $id,
+        'nombre' => $nombre,
+        'hash_contrasenha' => $hash_contrasenha,
+    ];
 }
 
 
