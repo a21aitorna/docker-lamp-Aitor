@@ -7,17 +7,28 @@ class Operario extends Empleado{
 
     public function __construct($nombre, $salario, $turno){
         parent::__construct($nombre, $salario);
-        $this->turno = $turno;
+        $this->comprobarVariableTurno($turno);
+    }
+
+
+    public function get_turno(){
+       return $this->turno;        
     }
 
     public function set_turno($turno){
-        if($turno==='diurno' || $turno ==='nocturno'){
-            $this->turno = $turno;
+        $this->comprobarVariableTurno($turno);
+    }
+
+    private function comprobarVariableTurno($turno){
+        if ($turno !== "diurno" && $turno !== "nocturno") {
+            throw new InvalidArgumentException("El valor de 'turno' debe ser 'diurno' o 'nocturno'.");
         }
         else{
-            throw new InvalidArgumentException("El turno solo puede ser diurno o nocturno.");
+            $this->turno = $turno;
         }
     }
 }
+
+
 
 ?>
