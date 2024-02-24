@@ -9,10 +9,10 @@ class NotasTrait {
     public function procesarNotas($notas) {
         $aprobados = $this->numeroDeAprobados($notas);
         $suspendos = $this->numeroDeSuspensos($notas);
-        $promedio = $this->notaMedia($notas);
+        $media = $this->notaMedia($notas);
 
         $this->saludo();
-        $this->showCalculusStudyCenter($aprobados, $suspendos, $promedio);
+        $this->showCalculusStudyCenter($aprobados, $suspendos, $media);
     }
 }
 
@@ -24,4 +24,9 @@ $nota5 = rand(0,10);
 
 $notasTrait = new NotasTrait();
 $notas = [$nota1, $nota2, $nota3, $nota4, $nota5];
+foreach ($notas as $nota){
+    echo "$nota, ";
+}
+echo "<br>";
+
 $notasTrait->procesarNotas($notas);
