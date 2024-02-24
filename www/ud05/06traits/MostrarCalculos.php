@@ -6,8 +6,8 @@ trait MostrarCalculos {
     }
 
     public function showCalculusStudyCenter($aprobados, $suspendos, $promedio) {
-        echo "Número de aprobados: $aprobados\n";
-        echo "Número de suspendos: $suspendos\n";
-        echo "Nota media: $promedio\n";
+        echo "Número de aprobados: $aprobados<br>";
+        echo "Número de suspendos: $suspendos<br>";
+        echo "Nota media: $promedio<br>";
     }
 }

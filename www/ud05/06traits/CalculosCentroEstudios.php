@@ -9,27 +9,24 @@
                     $aprobados++;
                 }
             }
-    
             return $aprobados;
         }
     
         public function numeroDeSuspensos($notas) {
-            $suspendos = 0;
+            $suspensos = 0;
     
             foreach ($notas as $nota) {
                 if ($nota < 5) {
-                    $suspendos++;
+                    $suspensos++;
                 }
             }
-    
-            return $suspendos;
+            return $suspensos;
         }
     
         public function notaMedia($notas) {
             $totalNotas = count($notas);
-    
             if ($totalNotas === 0) {
-                return 0; // Evitar división por cero
+                return 0; 
             }
     
             $sumaNotas = array_sum($notas);
