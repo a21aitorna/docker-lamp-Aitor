@@ -12,10 +12,10 @@ class NotasDaw extends Notas implements CalculosCentroEstudios {
     }
 
     public function numeroDeSuspensos() {
-        $suspendidos = array_filter($this->notas, function ($nota) {
+        $suspensos = array_filter($this->notas, function ($nota) {
             return $nota < 5;
         });
-        return count($suspendidos);
+        return count($suspensos);
     }
 
     public function notaMedia() {
