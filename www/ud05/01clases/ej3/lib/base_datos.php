@@ -40,7 +40,7 @@ function crear_tabla_usuarios($conexion)
     $sql = "CREATE TABLE IF NOT EXISTS usuarios(
         id INT(6) AUTO_INCREMENT PRIMARY KEY , 
         nombre VARCHAR(50) NOT NULL , 
-        pass VARCHAR(100) NOT NULL , 
+        constrasenha VARCHAR(100) NOT NULL , 
         apellidos VARCHAR(100) NOT NULL ,
         edad INT (3) NOT NULL ,
         provincia VARCHAR(50) NOT NULL)";
@@ -100,6 +100,7 @@ function editar_usuario($conexion, $id, $nombre, $apellidos, $edad, $provincia)
 //     $sql->bind_param("sssss", $nombre, $apellidos, $hasheado, $edad, $provincia);
 //     return $sql->execute() or die($conexion->error);
 // }
+
 //Funcion dar de alta usuario modificada
 function dar_alta_usuario($conexion, $usuario){
     $hasheado = password_hash($usuario->getPassword(), PASSWORD_DEFAULT);
