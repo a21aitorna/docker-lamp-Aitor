@@ -20,14 +20,14 @@ class Rectangulo extends Figura
     }
 
     public function agrandar($factor){
-        $anchoAgrandado = $this->ancho*$factor;
-        $altoAgrandado = $this->alto*$factor;
-        echo "El nuevo ancho es ".$anchoAgrandado." y el nuevo alto es ".$altoAgrandado."<br>";
+        $this->ancho = $this->ancho*$factor;
+        $this->alto = $this->alto*$factor;
+        echo "El nuevo ancho es ".$this->ancho." y el nuevo alto es ".$this->alto."<br>";
     }
 
     public function encoger($factor){
-        $anchoEncogido = $this->ancho/$factor;
-        $altoEncogido = $this->alto/$factor;
-        echo "El nuevo ancho es ".$anchoEncogido." y el nuevo alto es ".$altoEncogido."<br>";
+        $this->ancho = $this->ancho/$factor;
+        $this->alto = $this->alto/$factor;
+        echo "El nuevo ancho es ".$this->ancho." y con alto ".$this->alto."<br>";
     }
 }

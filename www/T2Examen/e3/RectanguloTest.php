@@ -5,7 +5,9 @@
     $rectangulo1 = new Rectangulo(4,5);
     $rectangulo1->dibujar();
     $rectangulo1->agrandar(4);
+    $rectangulo1->dibujar();
     $rectangulo1->encoger(2);
+    $rectangulo1->dibujar();
 
     $rectangulo2 = new Rectangulo(88,16);
     $rectangulo2->dibujar();
