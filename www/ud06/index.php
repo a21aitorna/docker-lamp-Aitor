@@ -122,7 +122,7 @@ Flight::route('DELETE /hoteles', function(){
     Flight::jsonp(["Hotel eliminado correctamente"]);
 });
 
-//Modificar hotel direccion, email y teléfono
+//Modificar hotel 
 Flight::route('PUT /hoteles', function(){
     $sql = "UPDATE hoteles SET direccion=?, email=?, telefono=? WHERE id=?";
     $direccion = Flight::request()->data->direccion;
@@ -138,6 +138,100 @@ Flight::route('PUT /hoteles', function(){
 
     $sentencia->execute();
     Flight::jsonp(["Hotel con id $id modificado correctamente"]);
+});
+
+//Mostrar reservas en todos los hoteles (en vez de que aparezca el las columnas de id_cliente e id_hotel, hice que aparezcan el nombre del cliente y el hotel al que están asociados).
+Flight::route('GET /reservas', function(){
+    $sql = "SELECT r.id, r.fecha_reserva, r.fecha_entrada, r.fecha_salida, c.nombre AS nombre_cliente, h.hotel AS nombre_hotel 
+    FROM reservas r
+    INNER JOIN clientes c ON r.id_cliente = c.id
+    INNER JOIN hoteles h ON r.id_hotel = h.id";
+    $sentencia = Flight::db()->prepare($sql);
+    $sentencia->execute();
+    $datos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+    Flight::json($datos);
+});
+
+//Mostrar reserva por id (en vez de que aparezca el las columnas de id_cliente e id_hotel, hice que aparezcan el nombre del cliente y el hotel al que están asociados).
+Flight::route('GET /reservas/@id', function($id){
+    $sql = "SELECT r.id, r.fecha_reserva, r.fecha_entrada, r.fecha_salida, c.nombre AS nombre_cliente, h.hotel AS nombre_hotel 
+    FROM reservas r
+    INNER JOIN clientes c ON r.id_cliente = c.id
+    INNER JOIN hoteles h ON r.id_hotel = h.id WHERE r.id=?";
+    $sentencia = Flight::db()->prepare($sql);
+    $sentencia->bindParam(1, $id);
+    $sentencia->execute();
+    $datos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+    Flight::json($datos);
+
+});
+
+//Insertar reserva
+Flight::route('POST /reservas', function(){
+
+    $id_cliente = Flight::request()->data->id_cliente;
+    $id_hotel = Flight::request()->data->id_hotel;
+    $fecha_reserva = Flight::request()->data->fecha_reserva;
+    $fecha_entrada = Flight::request()->data->fecha_entrada;
+    $fecha_salida = Flight::request()->data->fecha_salida;
+
+    //Se cuenta cuantas veces aparece el id_cliente en la columna id de clientes (solo puede ser el resultado 0 o 1 vez)
+    $sql_cliente = "SELECT COUNT(*) FROM clientes WHERE id = ?";
+    $sentencia_cliente = Flight::db()->prepare($sql_cliente);
+    $sentencia_cliente->bindParam(1, $id_cliente);
+    $sentencia_cliente->execute();
+    $comprobar_cliente = $sentencia_cliente->fetchColumn();
+
+    //Se cuenta cuantas veces aparece el id_hotel en la columna id de clientes (solo puede ser el resultado 0 o 1 vez)
+    $sql_hotel = "SELECT COUNT(*) FROM hoteles WHERE id = ?";
+    $sentencia_hotel = Flight::db()->prepare($sql_hotel);
+    $sentencia_hotel->bindParam(1, $id_hotel);
+    $sentencia_hotel->execute();
+    $comprobar_hotel = $sentencia_hotel->fetchColumn();
+
+    //Comprobacion si existen los ids que son clabes foraneas
+    if($comprobar_cliente>0 && $comprobar_hotel>0){
+        $sql = "INSERT INTO reservas (id_cliente, id_hotel, fecha_reserva, fecha_entrada, fecha_salida) VALUES (?,?,?,?,?)";
+        $sentencia = Flight::db()->prepare($sql);
+        $sentencia->bindParam(1, $id_cliente);
+        $sentencia->bindParam(2, $id_hotel);
+        $sentencia->bindParam(3, $fecha_reserva);
+        $sentencia->bindParam(4, $fecha_entrada);
+        $sentencia->bindParam(5, $fecha_salida);
+        if($sentencia->execute()){
+            Flight::halt(200, "Reserva introducida correctamente");
+        }
+        else{
+            Flight::jsonp(["Error en la reserva"]);
+        }    
+    }
+    else{
+        Flight::halt(400, "El cliente o el hotel no existen");
+    }
+});
+
+//Eliminar reserva
+Flight::route('DELETE /reservas', function(){
+    $sql = "DELETE FROM reservas WHERE id=?";
+    $id = Flight::request()->data->id;
+    $sentencia = Flight::db()->prepare($sql);
+    $sentencia->bindParam(1, $id);
+    $sentencia->execute();
+    Flight::jsonp(["Reserva eliminada correctamente"]);
+});
+
+//Modificar reserva fecha de entrada y la fecha de salida
+Flight::route('PUT /reservas', function(){
+    $sql = "UPDATE reservas SET fecha_entrada=?, fecha_salida=? WHERE id=?";
+    $id = $id = Flight::request()->data->id;
+    $fecha_entrada = Flight::request()->data->fecha_entrada;
+    $fecha_salida = Flight::request()->data->fecha_salida;
+    $sentencia = Flight::db()->prepare($sql);
+    $sentencia->bindParam(1, $fecha_entrada);
+    $sentencia->bindParam(2, $fecha_salida);
+    $sentencia->bindParam(3, $id);
+    $sentencia->execute();
+    Flight::jsonp(["Reserva modificada correctamente"]);
 });
 
 Flight::start();
