@@ -14,7 +14,7 @@ Flight::route('GET /clientes', function(){
     Flight::json($datos);
 });
 
-//Mostrar cliente por id
+//Mostrar cliente por id, por ejemplo la dirección para el cliente con id 4 sería /clientes/4; hay que añadir manualmente la dirección.
 Flight::route('GET /clientes/@id', function($id){
     $sentencia = Flight::db()->prepare("SELECT * FROM clientes WHERE id=?");
     $sentencia->bindParam(1,$id);
@@ -82,7 +82,7 @@ Flight::route('GET /hoteles', function(){
     Flight::json($datos);
 });
 
-//Mostrar datos del hotel por id
+//Mostrar datos del hotel por id, por ejemplo, la dirección para el hotel con id 8 sería /hotel/8; hay que añadir manualmente la dirección.
 Flight::route('GET /hoteles/@id', function($id){
     $sql = "SELECT * FROM hoteles WHERE id=?";
     $sentencia = Flight::db()->prepare($sql);
@@ -152,7 +152,7 @@ Flight::route('GET /reservas', function(){
     Flight::json($datos);
 });
 
-//Mostrar reserva por id (en vez de que aparezca el las columnas de id_cliente e id_hotel, hice que aparezcan el nombre del cliente y el hotel al que están asociados).
+//Mostrar reserva por id (en vez de que aparezca el las columnas de id_cliente e id_hotel, hice que aparezcan el nombre del cliente y el hotel al que están asociados). Por ejemplo, la dirección para la reserva con id 10 es /reservas/10; hay que añadir manualmente la dirección.
 Flight::route('GET /reservas/@id', function($id){
     $sql = "SELECT r.id, r.fecha_reserva, r.fecha_entrada, r.fecha_salida, c.nombre AS nombre_cliente, h.hotel AS nombre_hotel 
     FROM reservas r
