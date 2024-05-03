@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homepage</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="/styles/homepage.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% endblock %}
+</head>
+<body>
+    <video autoplay loop muted>
+        <source src="/videos/PokemonIntro.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+        <h1 class="mt-5">Bienvenido a la página principal de Pokémon</h1>
+    </div>
+    <div class="button-container">
+        <a href="/entrenadores" class="btn btn-primary mr-2">Ver Entrenadores</a>
+        <a href="/pokemon" class="btn btn-secondary">Ver Pokémon</a>
+    </div>
+</body>
+</html>
