@@ -2,7 +2,7 @@
     {
         "nombre":"Ash Ketchum", 
         "comentario": "¡Te elijo a ti, Pikachu!",
-        "imagen":"https://github.com/a21aitorna/docker-lamp-Aitor/blob/master/www/ud08/symfony_projects/public/images/entrenadores/Ash.png"
+        "imagen":"/images/entrenadores/Ash.png"
     },
     {
         "nombre":"Misty", 
