@@ -1,0 +1,17 @@
+[
+    {
+        "nombre":"Ash Ketchum", 
+        "comentario": "¡Te elijo a ti, Pikachu!",
+        "imagen":""
+    },
+    {
+        "nombre":"Misty", 
+        "comentario": "¡Te elijo a ti, Staryu!",
+        "imagen":""
+    },
+    {
+        "nombre":"Brock", 
+        "comentario": "¡Te elijo a ti, Onix!",
+        "imagen":""
+    }
+]

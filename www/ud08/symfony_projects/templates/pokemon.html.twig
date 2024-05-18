@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalles del Pokémon</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="/styles/pokemon.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% endblock %}
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Detalles del Pokémon</h1>
+        {% if pokemon is not empty %}  {#Se realiza una condicion if, pasando el id en la ruta. Corresponde con la clave numérica como indice de datosPokemon del controller#}
+            <div class="card mt-3">
+                <img src="{{ asset(pokemon.imagen) }}" class="card-img-top" alt="{{ pokemon.nombre }}"> {#Se muestra la imagen correspondiente al pokemon#}
+                <div class="card-body">
+                    <h2 class="card-title">{{ pokemon.nombre }}</h2> {#Se muestra el valor de la clave nombre como un h2#}
+                    <p class="card-text"><strong>Tipo:</strong> {{ pokemon.tipo }}</p> {#Se muestra el valor de la clave tipo como un p#}
+                    <p class="card-text"><strong>Descripción:</strong> {{ pokemon.descripcion}}</p> {#Se muestra el valor de la clave descripcion como un p#}
+                </div>
+            </div>
+        {% else %} {#Si no se cumple la condicion, saldrá este mensaje#}
+            <p class="mt-3">No se encontraron detalles para este Pokémon.</p>
+        {% endif %} {#Cierre de la condición#}
+    </div>
+</body>
+</html>

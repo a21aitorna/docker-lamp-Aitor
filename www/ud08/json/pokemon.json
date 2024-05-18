@@ -1,0 +1,20 @@
+[
+    {
+        "nombre":"Pikachu",
+        "tipo":"Eléctrico",
+        "descripcion":"Cuando se enfada, este Pokémon descarga la energía que almacena en el interior de las bolsas de las mejillas."
+    },
+    {
+        "nombre":"Charmander",
+        "tipo":"Fuego",
+        "descripcion":"La llama de su cola indica su fuerza vital. Si está débil, la llama arderá más tenue."
+    },{
+        "nombre":"Bulbasaur",
+        "tipo":"Eléctrico",
+        "descripcion":"Tras nacer, crece alimentándose durante un tiempo de los nutrientes que contiene el bulbo de su lomo."
+    },{
+        "nombre":"Squirtle",
+        "tipo":"Agua",
+        "descripcion":"Tras nacer, se le hincha el lomo y se le forma un caparazón. Escupe poderosa espuma por la boca."
+    }
+]

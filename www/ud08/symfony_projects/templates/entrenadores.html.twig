@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Entrenadores</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="/styles/entrenadores.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% endblock %}
+    
+   
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Listado de Entrenadores</h1>
+        <div class="row">
+            {% for entrenador in entrenadores %} {#Se hace un bucle for para recorrer el array de entrenadores mostrando los detalles de cada entrenador en una card#}
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ entrenador.nombre }}</h5> {#Se muestra el valor de cada nombre de entrenador como un h1 en cada card#}
+                            <img src="{{ entrenador.imagen }}"  alt="{{ entrenador.nombre }}"> {#Se muestra cada imagen de entrenador en cada card, si hay algún fallo con la imagen, mostrará el nombre#}
+                            <p class="card-text">{{ entrenador.comentario }}</p> {#Se muestra el valor de cada frase de entrenador como un p en cada card#}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {#Se cierra el bucle for#}
+        </div>
+    </div>
+</body>
+</html>
