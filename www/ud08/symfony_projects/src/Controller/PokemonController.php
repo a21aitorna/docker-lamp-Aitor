@@ -4,6 +4,7 @@
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Contracts\HttpClient\HttpClientInterface;
 
     class PokemonController extends AbstractController{
 
@@ -15,13 +16,10 @@
 
 
         #[Route('/entrenadores', name:'entrenadores')]
-        public function mostrarEntrenadores(): Response
+        public function mostrarEntrenadores(HttpClientInterface $httpClient): Response
         {
-            $entrenadores = [
-                ['nombre'=>'Ash Ketchum', 'comentario'=>'¡Te elijo a ti, Pikachu!', 'imagen'=>'/images/entrenadores/Ash.png'],
-                ['nombre'=>'Misty', 'comentario'=>'¡Te elijo a ti, Staryu!', 'imagen'=>'/images/entrenadores/Misty.png'],
-                ['nombre'=>'Brock', 'comentario'=>'¡Te elijo a ti, Onix!', 'imagen'=>'/images/entrenadores/Brock.png']
-            ];
+            $response = $httpClient->request('GET', 'https://raw.githubusercontent.com/a21aitorna/docker-lamp-Aitor/master/www/ud08/symfony_projects/public/json/entrenadores.json');
+            $entrenadores = $response->toArray();
 
             return $this->render('entrenadores.html.twig', ['entrenadores'=>$entrenadores]);
         }
