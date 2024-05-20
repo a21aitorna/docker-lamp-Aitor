@@ -5,6 +5,8 @@
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Contracts\HttpClient\HttpClientInterface;
+    use Symfony\Contracts\Cache\CacheInterface;
+    use Symfony\Contracts\Cache\ItemInterface;
 
     class PokemonController extends AbstractController{
 
@@ -16,11 +18,15 @@
 
 
         #[Route('/entrenadores', name:'entrenadores')]
-        public function mostrarEntrenadores(HttpClientInterface $httpClient): Response
+        public function mostrarEntrenadores(HttpClientInterface $httpClient, CacheInterface $cache): Response
         {
-            $response = $httpClient->request('GET', 'https://raw.githubusercontent.com/a21aitorna/docker-lamp-Aitor/master/www/ud08/symfony_projects/public/json/entrenadores.json');
-            $entrenadores = $response->toArray();
-
+            $response = $cache->get('entrenadores_data', function(ItemInterface $cacheItem) use($httpClient){
+                $cacheItem->expiresAfter(10);
+                $response = $httpClient->request('GET', 'https://raw.githubusercontent.com/a21aitorna/docker-lamp-Aitor/master/www/ud08/symfony_projects/public/json/entrenadores.json');
+                return $response->toArray();
+            });
+            
+            $entrenadores=$response;
             return $this->render('entrenadores.html.twig', ['entrenadores'=>$entrenadores]);
         }
 
@@ -31,19 +37,21 @@
             return $this->render('poke.html.twig',);
         }
         #[Route('/pokemon/{id}', name:'pokemon')]
-        public function mostrarPokemonDatos($id): Response
+        public function mostrarPokemonDatos(HttpClientInterface $httpClient, CacheInterface $cache,$id): Response
         {
-            $datosPokemon = [
-                1=>['nombre'=>'Pikachu', 'tipo'=>'Eléctrico', 'descripcion'=>'Cuando se enfada, este Pokémon descarga la energía que almacena en el interior de las bolsas de las mejillas.'],
-                2=>['nombre'=>'Charmander', 'tipo'=>'Fuego', 'descripcion'=>'La llama de su cola indica su fuerza vital. Si está débil, la llama arderá más tenue.'],
-                3=>['nombre'=>'Bulbasaur', 'tipo'=>'Planta', 'descripcion'=>'Tras nacer, crece alimentándose durante un tiempo de los nutrientes que contiene el bulbo de su lomo.'],
-                4=>['nombre'=>'Squirtle', 'tipo'=>'Agua', 'descripcion'=>'Tras nacer, se le hincha el lomo y se le forma un caparazón. Escupe poderosa espuma por la boca.']
-            ];
+
+            $response = $cache->get('pokemon_data', function(ItemInterface $cacheItem) use($httpClient){
+                $cacheItem->expiresAfter(10);
+                $response = $httpClient->request('GET', 'https://raw.githubusercontent.com/a21aitorna/docker-lamp-Aitor/master/www/ud08/symfony_projects/public/json/pokemon.json');
+                return $response->toArray();
+            });
+
+            $datosPokemon = $response;
+            
             if ($id > count($datosPokemon)) {
                 return $this->render('aviso.html.twig', ['mensaje' => 'No existen más Pokémon disponibles.']);
             } else {
                 $pokemon = $datosPokemon[$id] ?? null;
-                $pokemon['imagen'] = '/images/pokemon/'.$id.'.png'; //El nombre de la imagen coincide con el del id
                 return $this->render('pokemon.html.twig', ['pokemon' => $pokemon]);
             }
         }

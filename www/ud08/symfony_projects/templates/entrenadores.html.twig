@@ -21,6 +21,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ entrenador.nombre }}</h5> {#Se muestra el valor de cada nombre de entrenador como un h1 en cada card#}
                             <img src="{{ entrenador.imagen }}"  alt="{{ entrenador.nombre }}"> {#Se muestra cada imagen de entrenador en cada card, si hay algún fallo con la imagen, mostrará el nombre#}
+                            {#No se muestran las imaǵenes que se indican en el json con ruta al repositorio de github como te comenté, sale lo de OpaqueResponseBlocking#}
                             <p class="card-text">{{ entrenador.comentario }}</p> {#Se muestra el valor de cada frase de entrenador como un p en cada card#}
                         </div>
                     </div>
