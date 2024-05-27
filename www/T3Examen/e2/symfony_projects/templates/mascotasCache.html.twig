@@ -12,12 +12,12 @@
         {% for datoMascota in datoMascota %} {#Se hace un bucle for para recorrer el array de mascotas#}
             <h3>Name: {{datoMascota.name}}</h3>
             <h3>Species: {{datoMascota.species}}</h3>
-            {%if {{datoMascota.favFoods}} is defined}
+            {%if {{datoMascota.favFoods}} is defined %}
                 <h3>Favourite food:</h3>
                     <li>
-                        {%for comidaFav in {{datoMascota.favFoods}}}
+                        {%for comidaFav in {{datoMascota.favFoods}} %}
                             <ul>comidaFav</ul>
-                        %{endfor}
+                        {%endfor%}
                     </li>
             {%endif%}
             <h3>Birth year: {{datoMascota.birthYear}};
