@@ -15,8 +15,10 @@
         {
             $response =$httpClient->request('GET','https://raw.githubusercontent.com/a21aitorna/docker-lamp-Aitor/master/www/T3Examen/pets.json');
             $mascotas = $response->toArray();
+            foreach($mascotas as $mascota){
+                return $this->render('mascotas.html.twig', ['mascota'=>$mascota]);
+            }
 
-            return $this->render('mascotas.html.twig', ['mascotas'=>$mascotas]);
         }
         
         #[Route('petscache', name:'petscache')]
@@ -29,6 +31,8 @@
             });
 
             $datosMascota = $response;
-            return $this->render('mascotasCache.html.twig', ['datosMascotas'=>$datosMascota]);
+            foreach($datosMascotas as $datosMascota){
+                return $this->render('mascotasCache.html.twig', ['datoMascota'=>$datosMascota]);
+            }
         }
     }

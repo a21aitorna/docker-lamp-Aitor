@@ -9,25 +9,20 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5 mb-4">Listado de Entrenadores</h1>
-        <div class="row">
-            {% for mascota in mascotas %} {#Se hace un bucle for para recorrer el array de mascotas#}
-               <div>
-                    <h3>Name: {{mascota.name}}</h3>
-                    <h3>Species: {{mascota.species}}</h3>
-                    <h3>Favourite food</h3>
-                        <li>
-                        {% set commidasFavoritas = {{mascota.favFoods}}%}
-                        {% for comidaFavorita in commidasFavoritas %}
-                            <ul>{{comidaFavorita}}</ul>
-                        {% endfor %}
-                        </li>
-                    <h3>Birth year: {{mascota.birhtYear}}</ul>
-                    <img sr="{{asset(mascota.photo)}}"
-               </div>
-            {% endfor %}
-            {#Se cierra el bucle for#}
-        </div>
+        {% for cadaMascota in mascota %} {#Se hace un bucle for para recorrer el array de mascotas#}
+            <h3>Name: {{cadaMascota.name}}</h3>
+            <h3>Species: {{cadaMascota.species}}</h3>
+            {%if {{cadaMascota.favFoods}} is defined}
+                <h3>Favourite food:</h3>
+                    <li>
+                        {%for comidaFav in {{cadaMascota.favFoods}}}
+                            <ul>comidaFav</ul>
+                        %{endfor}
+                    </li>
+            {%endif%}
+            <h3>Birth year: {{cadaMascota.birthYear}};
+            <img src="asset{{cadaMascota.photo}}" alt="Pets Image">
+        {% endfor %} {#Se cierra el bucle for#}
     </div>
 </body>
 </html>
