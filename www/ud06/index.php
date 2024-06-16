@@ -189,7 +189,7 @@ Flight::route('POST /reservas', function(){
     $sentencia_hotel->execute();
     $comprobar_hotel = $sentencia_hotel->fetchColumn();
 
-    //Comprobacion si existen los ids que son clabes foraneas
+    //Comprobacion si existen los ids que son claves foraneas
     if($comprobar_cliente>0 && $comprobar_hotel>0){
         $sql = "INSERT INTO reservas (id_cliente, id_hotel, fecha_reserva, fecha_entrada, fecha_salida) VALUES (?,?,?,?,?)";
         $sentencia = Flight::db()->prepare($sql);
