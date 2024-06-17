@@ -157,6 +157,7 @@ function get_ultima_donacion($conexion, $idDonante)
 
 function get_donaciones_antiguas($conexion, $fecha)
 {
+    //La fecha es anterior al día que se pasa por parametro, no incluye el día propio
     $consulta = $conexion->prepare("SELECT donantes.nombre, donantes.apellidos,historico.fechaDonacion, historico.proximaDonacion FROM donantes, historico WHERE donantes.id = historico.idDonante AND historico.fechaDonacion<'$fecha' ORDER BY historico.fechaDonacion DESC");
     $consulta->execute();
     return $consulta;
