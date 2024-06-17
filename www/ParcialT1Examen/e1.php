@@ -3,7 +3,7 @@
     function contarVocales($stringCualquiera){
         $vocales=0;
         $stringCualquiera=strtolower($stringCualquiera);
-        for($i=0;$i<=strlen($stringCualquiera);$i++){
+        for($i=0;$i<strlen($stringCualquiera);$i++){
             // if($stringCualquiera[$i]=='a'){//||$stringCualquiera[$i]='e'||$stringCualquiera[$i]='i'||$stringCualquiera[$i]='o'||$stringCualquiera[$i]='u'||$stringCualquiera[$i]='A'||$stringCualquiera[$i]='E'||$stringCualquiera[$i]='I'||$stringCualquiera[$i]='O'||$stringCualquiera[$i]='U'){
             if(in_array($stringCualquiera[$i],['a','e','i','o','u'])){
                 $vocales++;
