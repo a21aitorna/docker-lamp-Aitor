@@ -11,6 +11,63 @@
   </head>
   <body>
     <div class="container">
+    <?php
+        require 'e2.php';
+        $universidad = array(
+            "Facultad de Ciencias" => array(
+                "Departamento de Física" => array(
+                    "Profesores" => array(
+                        "Juan Pérez",
+                        "Ana García"
+                    ),
+                    "Cursos" => array(
+                        "Mecánica",
+                        "Electromagnetismo"
+                    )
+                ),
+                "Departamento de Matemáticas" => array(
+                    "Profesores" => array(
+                        "Carlos Sánchez",
+                        "María López"
+                    ),
+                    "Cursos" => array(
+                        "Álgebra",
+                        "Cálculo"
+                    )
+                )
+            ),
+            "Facultad de Letras" => array(
+                "Departamento de Historia" => array(
+                    "Profesores" => array(
+                        "José Ruiz",
+                        "Elena Fernández"
+                    ),
+                    "Cursos" => array(
+                        "Historia Antigua",
+                        "Historia Moderna"
+                    )
+                ),
+                "Departamento de Literatura" => array(
+                    "Profesores" => array(
+                        "Miguel Hernández",
+                        "Laura Martínez"
+                    ),
+                    "Cursos" => array(
+                        "Literatura Española",
+                        "Literatura Universal"
+                    )
+                )
+            )
+        );
+        //De la de imprimirProfesoresFiltrando pondré dos ejemplos, uno en ql que se muestren dos nombres de facultades diferentes (sólo hay dos nombres que empiecen por la misma letra), y otro ejemplo individual.
+        echo "<h1>Listado de profesores</h1>";
+        imprimirProfesores($universidad);
+        
+        echo("<br>====================================================================================================================================<br><h1>Listado de profesores cuyo nombre comienza por M</h1>");
+        imprimirProfesoresFiltrando($universidad, "M");
+        echo("<br>====================================================================================================================================<br><h1>Listado de profesores cuyo nombre comienza por C</h1>");
+        imprimirProfesoresFiltrando($universidad, "C");
+        ?>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
