@@ -14,13 +14,20 @@
     <?php
       require 'e3.php';
 
-      $coches = array (
-        array("Volvo",22,18),
-        array("BMW",15,13),
-        array("Saab",5,2),
-        array("Land Rover",17,15)
+      // $coches = array (
+      //   array("Volvo",22,18),
+      //   array("BMW",15,13),
+      //   array("Saab",5,2),
+      //   array("Land Rover",17,15)
+      // );
+      
+      $coches = array(
+        "Volvo" => array("stock" => 22, "ventas" => 18),
+        "BMW" => array("stock" => 15, "ventas" => 13),
+        "Saab" => array("stock" => 5, "ventas" => 2),
+        "Land Rover" => array("stock" => 17, "ventas" => 15)
       );
-        
+
       imprimirTabla($coches);
     ?>
     </div>

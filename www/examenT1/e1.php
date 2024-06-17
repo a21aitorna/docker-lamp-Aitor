@@ -3,7 +3,7 @@
 function esPar($array){
     $result = array();
     foreach($array as $value){
-        if(is_numeric($value)){
+        if(is_int($value) || (is_float($value) && intval($value))){
             $result[] = ($value%2 == 0);
         }
         else{
@@ -17,7 +17,7 @@ function esPar($array){
 function esImpar($array){
     $result = array();
     foreach($array as $value){
-        if(is_numeric($value)){
+        if(is_int($value) || (is_float($value) && intval($value))){
             $result[] = ($value %2 != 0);
         }
         else{
